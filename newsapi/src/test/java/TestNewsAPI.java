@@ -17,7 +17,6 @@ public class TestNewsAPI extends NewsAPIClient {
     private String endpoint;
     private String complete_URL;
     Response response;
-    ValidatableResponse validatableResponse;
 
     @BeforeMethod
     public void setUp() {

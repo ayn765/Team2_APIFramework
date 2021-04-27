@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.util.Properties;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 
 public class TwitterAPIClient {
 
@@ -19,8 +18,12 @@ public class TwitterAPIClient {
 
     private final String GET_TRENDS_ENDPOINT = "/trends/place.json";
     private final String CREATE_TWEET_ENDPOINT = "/statuses/update.json";
-    private final String RESOURCE_TWEETS_DELETE = "/destroy";
+    private final String RESOURCE_TWEETS_DELETE = "/statuses/destroy.json";
     private final String CREATE_FRIENDSHIP = "/friendships/create.json";
+    private final String GEO_SEARCH = "/geo/search.json";
+    private final String FRIENDS_LIST = "/friends/list.json";
+    private final String UPDATE_IMAGE = "/account/update_profile_image.json";
+
 
     private String URI;
 
@@ -54,15 +57,32 @@ public class TwitterAPIClient {
                     .then();
         }
 
-    public ValidatableResponse deleteTweetByID(String id) {
+    public ValidatableResponse deleteTweetByID(long id) {
 
-        return given().auth().oauth(this.APIKey, this.APISecretKey, this.Token, this.TokenSecret).param("id", id)
+        return given().auth().oauth(this.APIKey, this.APISecretKey, this.Token, this.TokenSecret).queryParam("id", id)
                 .when().post(this.BASE_URL + RESOURCE_TWEETS_DELETE).then();
     }
+
 
     public ValidatableResponse createFriendship(long id){
         return given().auth().oauth(this.APIKey, this.APISecretKey, this.Token, this.TokenSecret).param("id", id)
                 .when().post(this.BASE_URL + CREATE_FRIENDSHIP). then();
+    }
+    public ValidatableResponse getGeoSearch(String ip){
+        return given().auth().oauth(this.APIKey, this.APISecretKey, this.Token, this.TokenSecret)
+                .param("ip", ip)
+                .when().get(this.BASE_URL + this.GEO_SEARCH)
+                .then();
+    }
+    public ValidatableResponse getFriendsList(){
+        return given().auth().oauth(this.APIKey, this.APISecretKey, this.Token, this.TokenSecret)
+                .when().get(this.BASE_URL + this.FRIENDS_LIST)
+                .then();
+    }
+
+    public ValidatableResponse updateImage(String path){
+        return given().auth().oauth(this.APIKey, this.APISecretKey, this.Token, this.TokenSecret).param("image", path)
+                .when().post(this.BASE_URL + UPDATE_IMAGE). then();
     }
 
 }
