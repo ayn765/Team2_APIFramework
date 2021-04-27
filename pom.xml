@@ -12,6 +12,8 @@
         <module>Generic</module>
         <module>jasonplaceholder</module>
         <module>twitter</module>
+        <module>newsapi</module>
+        <module>reqres</module>
     </modules>
 
     <properties>
