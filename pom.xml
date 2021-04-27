@@ -12,6 +12,7 @@
         <module>Generic</module>
         <module>jasonplaceholder</module>
         <module>twitter</module>
+        <module>newsapi</module>
     </modules>
 
     <properties>
